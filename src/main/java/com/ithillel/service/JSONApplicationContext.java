@@ -18,7 +18,7 @@ public class JSONApplicationContext implements ApplicationContext {
     public JSONApplicationContext() {
         ObjectMapper mapper = new ObjectMapper();
         try {
-            JsonNode root = mapper.readTree(new File("C:\\Users\\Alex.NOTEBOOOK\\IdeaProjects\\TextProcessor-main\\src\\main\\resources\\application.json"));
+            JsonNode root = mapper.readTree(new File("src/main/resources/application.json"));
             JsonNode beans = root.path("beans");
             for (JsonNode b : beans) {
                 String name = b.path("name").asText();
