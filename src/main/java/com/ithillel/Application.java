@@ -1,20 +1,11 @@
 package com.ithillel;
 
-import com.ithillel.service.ApplicationContext;
-import com.ithillel.service.InMemoryTextProcessor;
-import com.ithillel.service.PropertiesApplicationContext;
 import com.ithillel.service.TextProcessor;
-
-import java.util.Objects;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Application {
-
-    private ApplicationContext applicationContext = new PropertiesApplicationContext();
-    private TextProcessor textProcessor;
-
-    public Application() {
-        textProcessor = (TextProcessor) applicationContext.getBean("textProcessor");
-    }
+    TextProcessor textProcessor;
 
     public void save(String key, final String text) {
         textProcessor.save(key, text);
@@ -25,8 +16,9 @@ public class Application {
     }
 
     public static void main(String[] args) {
-        Application application = new Application();
-        application.save("1.txt", "simple text");
-        System.out.println(application.getByKey("1.txt"));
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
+        TextProcessor textProcessor = applicationContext.getBean("textProcessor", TextProcessor.class);
+        textProcessor.save("1.txt", "simple text");
+        System.out.println(textProcessor.getByKey("1.txt"));
     }
 }
